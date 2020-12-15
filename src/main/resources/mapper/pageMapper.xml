@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.simpleblog.blog.mapper.pageMapper">
+  <resultMap id="BaseResultMap" type="com.github.simpleblog.blog.entity.page">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="pageOrder" jdbcType="INTEGER" property="pageorder" />
+    <result column="pagePermalink" jdbcType="VARCHAR" property="pagepermalink" />
+    <result column="pageTitle" jdbcType="VARCHAR" property="pagetitle" />
+    <result column="pageOpenTarget" jdbcType="VARCHAR" property="pageopentarget" />
+    <result column="pageIcon" jdbcType="VARCHAR" property="pageicon" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, pageOrder, pagePermalink, pageTitle, pageOpenTarget, pageIcon
+  </sql>
+  <select id="selectByExample" parameterType="com.github.simpleblog.blog.entity.pageExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from page
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from page
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from page
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.github.simpleblog.blog.entity.pageExample">
+    delete from page
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.github.simpleblog.blog.entity.page">
+    insert into page (id, pageOrder, pagePermalink, 
+      pageTitle, pageOpenTarget, pageIcon
+      )
+    values (#{id,jdbcType=VARCHAR}, #{pageorder,jdbcType=INTEGER}, #{pagepermalink,jdbcType=VARCHAR}, 
+      #{pagetitle,jdbcType=VARCHAR}, #{pageopentarget,jdbcType=VARCHAR}, #{pageicon,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.github.simpleblog.blog.entity.page">
+    insert into page
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="pageorder != null">
+        pageOrder,
+      </if>
+      <if test="pagepermalink != null">
+        pagePermalink,
+      </if>
+      <if test="pagetitle != null">
+        pageTitle,
+      </if>
+      <if test="pageopentarget != null">
+        pageOpenTarget,
+      </if>
+      <if test="pageicon != null">
+        pageIcon,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="pageorder != null">
+        #{pageorder,jdbcType=INTEGER},
+      </if>
+      <if test="pagepermalink != null">
+        #{pagepermalink,jdbcType=VARCHAR},
+      </if>
+      <if test="pagetitle != null">
+        #{pagetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="pageopentarget != null">
+        #{pageopentarget,jdbcType=VARCHAR},
+      </if>
+      <if test="pageicon != null">
+        #{pageicon,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.github.simpleblog.blog.entity.pageExample" resultType="java.lang.Long">
+    select count(*) from page
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update page
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pageorder != null">
+        pageOrder = #{record.pageorder,jdbcType=INTEGER},
+      </if>
+      <if test="record.pagepermalink != null">
+        pagePermalink = #{record.pagepermalink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pagetitle != null">
+        pageTitle = #{record.pagetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pageopentarget != null">
+        pageOpenTarget = #{record.pageopentarget,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pageicon != null">
+        pageIcon = #{record.pageicon,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update page
+    set id = #{record.id,jdbcType=VARCHAR},
+      pageOrder = #{record.pageorder,jdbcType=INTEGER},
+      pagePermalink = #{record.pagepermalink,jdbcType=VARCHAR},
+      pageTitle = #{record.pagetitle,jdbcType=VARCHAR},
+      pageOpenTarget = #{record.pageopentarget,jdbcType=VARCHAR},
+      pageIcon = #{record.pageicon,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.github.simpleblog.blog.entity.page">
+    update page
+    <set>
+      <if test="pageorder != null">
+        pageOrder = #{pageorder,jdbcType=INTEGER},
+      </if>
+      <if test="pagepermalink != null">
+        pagePermalink = #{pagepermalink,jdbcType=VARCHAR},
+      </if>
+      <if test="pagetitle != null">
+        pageTitle = #{pagetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="pageopentarget != null">
+        pageOpenTarget = #{pageopentarget,jdbcType=VARCHAR},
+      </if>
+      <if test="pageicon != null">
+        pageIcon = #{pageicon,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.github.simpleblog.blog.entity.page">
+    update page
+    set pageOrder = #{pageorder,jdbcType=INTEGER},
+      pagePermalink = #{pagepermalink,jdbcType=VARCHAR},
+      pageTitle = #{pagetitle,jdbcType=VARCHAR},
+      pageOpenTarget = #{pageopentarget,jdbcType=VARCHAR},
+      pageIcon = #{pageicon,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

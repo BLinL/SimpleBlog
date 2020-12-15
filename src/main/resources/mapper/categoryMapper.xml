@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.simpleblog.blog.mapper.categoryMapper">
+  <resultMap id="BaseResultMap" type="com.github.simpleblog.blog.entity.category">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="categoryTitle" jdbcType="VARCHAR" property="categorytitle" />
+    <result column="categoryURI" jdbcType="VARCHAR" property="categoryuri" />
+    <result column="categoryOrder" jdbcType="INTEGER" property="categoryorder" />
+    <result column="categoryTagCnt" jdbcType="INTEGER" property="categorytagcnt" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.github.simpleblog.blog.entity.category">
+    <result column="categoryDescription" jdbcType="LONGVARCHAR" property="categorydescription" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, categoryTitle, categoryURI, categoryOrder, categoryTagCnt
+  </sql>
+  <sql id="Blob_Column_List">
+    categoryDescription
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.github.simpleblog.blog.entity.categoryExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.github.simpleblog.blog.entity.categoryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from category
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from category
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.github.simpleblog.blog.entity.categoryExample">
+    delete from category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.github.simpleblog.blog.entity.category">
+    insert into category (id, categoryTitle, categoryURI, 
+      categoryOrder, categoryTagCnt, categoryDescription
+      )
+    values (#{id,jdbcType=VARCHAR}, #{categorytitle,jdbcType=VARCHAR}, #{categoryuri,jdbcType=VARCHAR}, 
+      #{categoryorder,jdbcType=INTEGER}, #{categorytagcnt,jdbcType=INTEGER}, #{categorydescription,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.github.simpleblog.blog.entity.category">
+    insert into category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="categorytitle != null">
+        categoryTitle,
+      </if>
+      <if test="categoryuri != null">
+        categoryURI,
+      </if>
+      <if test="categoryorder != null">
+        categoryOrder,
+      </if>
+      <if test="categorytagcnt != null">
+        categoryTagCnt,
+      </if>
+      <if test="categorydescription != null">
+        categoryDescription,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="categorytitle != null">
+        #{categorytitle,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryuri != null">
+        #{categoryuri,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryorder != null">
+        #{categoryorder,jdbcType=INTEGER},
+      </if>
+      <if test="categorytagcnt != null">
+        #{categorytagcnt,jdbcType=INTEGER},
+      </if>
+      <if test="categorydescription != null">
+        #{categorydescription,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.github.simpleblog.blog.entity.categoryExample" resultType="java.lang.Long">
+    select count(*) from category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update category
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categorytitle != null">
+        categoryTitle = #{record.categorytitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryuri != null">
+        categoryURI = #{record.categoryuri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryorder != null">
+        categoryOrder = #{record.categoryorder,jdbcType=INTEGER},
+      </if>
+      <if test="record.categorytagcnt != null">
+        categoryTagCnt = #{record.categorytagcnt,jdbcType=INTEGER},
+      </if>
+      <if test="record.categorydescription != null">
+        categoryDescription = #{record.categorydescription,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update category
+    set id = #{record.id,jdbcType=VARCHAR},
+      categoryTitle = #{record.categorytitle,jdbcType=VARCHAR},
+      categoryURI = #{record.categoryuri,jdbcType=VARCHAR},
+      categoryOrder = #{record.categoryorder,jdbcType=INTEGER},
+      categoryTagCnt = #{record.categorytagcnt,jdbcType=INTEGER},
+      categoryDescription = #{record.categorydescription,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update category
+    set id = #{record.id,jdbcType=VARCHAR},
+      categoryTitle = #{record.categorytitle,jdbcType=VARCHAR},
+      categoryURI = #{record.categoryuri,jdbcType=VARCHAR},
+      categoryOrder = #{record.categoryorder,jdbcType=INTEGER},
+      categoryTagCnt = #{record.categorytagcnt,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.github.simpleblog.blog.entity.category">
+    update category
+    <set>
+      <if test="categorytitle != null">
+        categoryTitle = #{categorytitle,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryuri != null">
+        categoryURI = #{categoryuri,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryorder != null">
+        categoryOrder = #{categoryorder,jdbcType=INTEGER},
+      </if>
+      <if test="categorytagcnt != null">
+        categoryTagCnt = #{categorytagcnt,jdbcType=INTEGER},
+      </if>
+      <if test="categorydescription != null">
+        categoryDescription = #{categorydescription,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.github.simpleblog.blog.entity.category">
+    update category
+    set categoryTitle = #{categorytitle,jdbcType=VARCHAR},
+      categoryURI = #{categoryuri,jdbcType=VARCHAR},
+      categoryOrder = #{categoryorder,jdbcType=INTEGER},
+      categoryTagCnt = #{categorytagcnt,jdbcType=INTEGER},
+      categoryDescription = #{categorydescription,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.github.simpleblog.blog.entity.category">
+    update category
+    set categoryTitle = #{categorytitle,jdbcType=VARCHAR},
+      categoryURI = #{categoryuri,jdbcType=VARCHAR},
+      categoryOrder = #{categoryorder,jdbcType=INTEGER},
+      categoryTagCnt = #{categorytagcnt,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+
+<generatorConfiguration>
+    <classPathEntry
+        location="/Volumes/d/maven_repo/mysql/mysql-connector-java/5.1.46/mysql-connector-java-5.1.46.jar" />
+    <context id="solo" targetRuntime="MyBatis3">
+        <!--实体类实现序列化接口-->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+
+        <!--生成toString方法-->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+            <property name="addRemarkCommons" value="true"/>
+            <property name="generateEncoding" value="UTF-8"/>
+        </commentGenerator>
+        <!-- Database Connection Information -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+            connectionURL="jdbc:mysql://localhost:3333/tl-shanghai?characterEncoding=UTF-8"
+            userId="root" password="tl_mysql" />
+        <!--entity Entity class-->
+        <javaModelGenerator targetPackage="com.github.simpleblog.blog.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- mybatis mapping xml file -->
+        <sqlMapGenerator targetPackage="com.github.simpleblog.blog.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+        <!--mapper Interface -->
+        <javaClientGenerator targetPackage="com.github.simpleblog.blog.mapper" targetProject="src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+        <!--Data sheet-->
+        <table tableName="archivedate" domainObjectName="archivedate" />
+        <table tableName="archivedate_article" domainObjectName="archivedateArticle" />
+        <table tableName="article" domainObjectName="article" />
+        <table tableName="category" domainObjectName="category" />
+        <table tableName="category_tag" domainObjectName="categoryTag" />
+        <table tableName="link" domainObjectName="link" />
+        <table tableName="option" domainObjectName="option" />
+        <table tableName="page" domainObjectName="page" />
+        <table tableName="plugin" domainObjectName="plugin" />
+        <table tableName="tag" domainObjectName="tag" />
+        <table tableName="tag_article" domainObjectName="tagArticle" />
+        <table tableName="tag_article" domainObjectName="tagArticle" />
+        <table tableName="user" domainObjectName="user" />
+    </context>
+</generatorConfiguration>
